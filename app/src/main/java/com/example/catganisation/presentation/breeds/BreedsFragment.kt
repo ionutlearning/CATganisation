@@ -10,8 +10,10 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.example.catganisation.R
 import com.example.catganisation.domain.NetworkResult
+import com.example.catganisation.presentation.ui.adapters.BreedsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,10 +38,13 @@ class BreedsFragment : Fragment() {
             view.findViewById<TextView>(R.id.error_message).visibility =
                 if (state is NetworkResult.Error) VISIBLE else GONE
 
+            view.findViewById<RecyclerView>(R.id.breeds).visibility =
+                if (state is NetworkResult.Success) VISIBLE else GONE
+
 
             when (state) {
-                is NetworkResult.Success -> view.findViewById<TextView>(R.id.breeds).text =
-                    state.data.toString()
+                is NetworkResult.Success -> view.findViewById<RecyclerView>(R.id.breeds).adapter =
+                    BreedsAdapter(state.data)
                 is NetworkResult.Error ->
                     view.findViewById<TextView>(R.id.error_message).text = state.message
             }
