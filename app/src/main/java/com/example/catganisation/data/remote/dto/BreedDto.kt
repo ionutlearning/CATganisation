@@ -37,7 +37,7 @@ data class BreedDto(
     @SerializedName("id")
     val id: String,
     @SerializedName("image")
-    val image: Image,
+    val image: Image?,
     @SerializedName("indoor")
     val indoor: Int,
     @SerializedName("intelligence")
