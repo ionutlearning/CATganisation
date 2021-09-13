@@ -15,7 +15,7 @@ class GetBreedsUseCase @Inject constructor(
             val breeds = repository.getBreeds()
             emit(NetworkResult.Success(breeds))
         } catch (e: Exception) {
-            emit(NetworkResult.Error(e.localizedMessage ?: "An unknown error occured"))
+            emit(NetworkResult.Error(e.localizedMessage ?: "An unknown error occurred"))
         }
     }
 }
