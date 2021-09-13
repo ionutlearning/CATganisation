@@ -1,4 +1,4 @@
-package com.example.catganisation.presentation.home
+package com.example.catganisation.presentation.breeds
 
 import com.example.catganisation.domain.model.Breed
 

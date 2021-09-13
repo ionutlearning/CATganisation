@@ -2,9 +2,11 @@ package com.example.catganisation.data.remote
 
 import com.example.catganisation.data.remote.dto.BreedDto
 import retrofit2.http.GET
+import retrofit2.http.Headers
 
 interface CatApi {
 
+    @Headers("x-api-key:$API_KEY")
     @GET("/v1/breeds")
     suspend fun getBreeds(): List<BreedDto>
 
