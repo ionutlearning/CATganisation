@@ -1,7 +1,9 @@
 package com.example.catganisation.di
 
 import com.example.catganisation.data.repository.BreedsRepositoryImpl
+import com.example.catganisation.data.repository.LoginRepositoryImpl
 import com.example.catganisation.domain.repository.BreedsRepository
+import com.example.catganisation.domain.repository.LoginRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,4 +17,10 @@ abstract class RepositoryModule {
     abstract fun bindBreedRepository(
         impl: BreedsRepositoryImpl
     ): BreedsRepository
+
+
+    @Binds
+    abstract fun bindLoginRepository(
+        impl: LoginRepositoryImpl
+    ): LoginRepository
 }
