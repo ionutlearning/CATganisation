@@ -1,16 +1,38 @@
 package com.example.catganisation.data.remote
 
-import okhttp3.Interceptor
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
+import okio.Buffer
+
 
 class LoggingInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-//        println("aici123 ${chain.request()}")
+        val response: String
+        val code: Int
 
-        val request: Request = chain.request()
+        if (isValidAuth(chain.request().body())) {
+            response = "{\"status\": " + 200 + ",\"message\": \"OK\"}"
+            code = 200
 
-        return chain.proceed(request)
+        } else {
+            response = "{\"status\": " + 401 + ",\"message\": \"Unauthorized\"}"
+            code = 401
+        }
+
+        return Response.Builder()
+            .code(code)
+            .message(response)
+            .request(chain.request())
+            .protocol(Protocol.HTTP_1_1)
+            .body(ResponseBody.create(MediaType.parse("application/json"), response))
+            .addHeader("content-type", "application/json")
+            .build()
+    }
+
+    private fun isValidAuth(request: RequestBody?): Boolean {
+        val buffer = Buffer()
+        request?.writeTo(buffer)
+        val body = buffer.readUtf8()
+        return body == "username=1&password=1"
     }
 }
