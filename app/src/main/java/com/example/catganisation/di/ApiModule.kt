@@ -1,8 +1,8 @@
 package com.example.catganisation.di
 
-import com.example.catganisation.data.remote.CatApi
+import com.example.catganisation.data.remote.CatService
 import com.example.catganisation.data.remote.LoggingInterceptor
-import com.example.catganisation.data.remote.LoginApi
+import com.example.catganisation.data.remote.LoginService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,23 +18,23 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun getCatApi(): CatApi {
+    fun getCatService(): CatService {
         return Retrofit.Builder()
-            .baseUrl(CatApi.BASE_URL)
+            .baseUrl(CatService.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(CatApi::class.java)
+            .create(CatService::class.java)
     }
 
     @Provides
     @Singleton
-    fun getLoginApi(client: OkHttpClient): LoginApi {
+    fun getLoginService(client: OkHttpClient): LoginService {
         return Retrofit.Builder()
-            .baseUrl(LoginApi.BASE_URL)
+            .baseUrl(LoginService.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(LoginApi::class.java)
+            .create(LoginService::class.java)
     }
 
     @Provides
