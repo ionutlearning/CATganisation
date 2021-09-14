@@ -1,4 +1,4 @@
-package com.example.catganisation.data.remote
+package com.example.catganisation.data.remote.services
 
 import com.example.catganisation.data.remote.dto.BreedDto
 import retrofit2.http.GET

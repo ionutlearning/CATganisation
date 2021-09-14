@@ -1,8 +1,8 @@
 package com.example.catganisation.di
 
-import com.example.catganisation.data.remote.CatService
-import com.example.catganisation.data.remote.LoggingInterceptor
-import com.example.catganisation.data.remote.LoginService
+import com.example.catganisation.data.remote.services.CatService
+import com.example.catganisation.data.remote.mock.LoggingInterceptor
+import com.example.catganisation.data.remote.services.LoginService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

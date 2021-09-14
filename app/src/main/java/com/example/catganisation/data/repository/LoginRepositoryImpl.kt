@@ -1,6 +1,6 @@
 package com.example.catganisation.data.repository
 
-import com.example.catganisation.data.remote.LoginService
+import com.example.catganisation.data.remote.services.LoginService
 import com.example.catganisation.data.remote.mappers.toLoginResult
 import com.example.catganisation.domain.model.LoginResult
 import com.example.catganisation.domain.repository.LoginRepository

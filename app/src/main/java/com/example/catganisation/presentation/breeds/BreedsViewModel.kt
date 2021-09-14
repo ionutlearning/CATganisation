@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.catganisation.domain.NetworkResult
 import com.example.catganisation.domain.model.Breed
-import com.example.catganisation.domain.usecase.GetBreedsUseCase
+import com.example.catganisation.domain.usecase.breeds.GetBreedsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

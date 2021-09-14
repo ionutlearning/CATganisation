@@ -1,4 +1,4 @@
-package com.example.catganisation.domain.usecase
+package com.example.catganisation.domain.usecase.login
 
 import com.example.catganisation.domain.NetworkResult
 import com.example.catganisation.domain.repository.LoginRepository

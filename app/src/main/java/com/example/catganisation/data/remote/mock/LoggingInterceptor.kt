@@ -1,4 +1,4 @@
-package com.example.catganisation.data.remote
+package com.example.catganisation.data.remote.mock
 
 import okhttp3.*
 import okio.Buffer

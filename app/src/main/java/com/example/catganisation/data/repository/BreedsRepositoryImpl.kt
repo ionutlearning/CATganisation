@@ -1,6 +1,6 @@
 package com.example.catganisation.data.repository
 
-import com.example.catganisation.data.remote.CatService
+import com.example.catganisation.data.remote.services.CatService
 import com.example.catganisation.data.remote.mappers.toBreed
 import com.example.catganisation.domain.model.Breed
 import com.example.catganisation.domain.repository.BreedsRepository

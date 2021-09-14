@@ -1,4 +1,4 @@
-package com.example.catganisation.domain.usecase
+package com.example.catganisation.domain.usecase.breeds
 
 import com.example.catganisation.domain.NetworkResult
 import com.example.catganisation.domain.repository.BreedsRepository
