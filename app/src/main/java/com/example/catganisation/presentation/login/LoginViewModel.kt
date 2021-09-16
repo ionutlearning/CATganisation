@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.catganisation.domain.NetworkResult
+import com.example.catganisation.domain.usecase.fetchData.FetchDataUseCase
 import com.example.catganisation.domain.usecase.login.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -13,14 +14,20 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val useCase: LoginUseCase) : ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase,
+    private val fetchDataUseCase: FetchDataUseCase
+) : ViewModel() {
 
     private val _state = MutableLiveData<NetworkResult<Boolean>>()
     val state: LiveData<NetworkResult<Boolean>> = _state
 
     fun login(username: String, password: String) {
-        useCase(username, password).onEach {
-            _state.postValue(it)
+        loginUseCase(username, password).onEach { result ->
+            if (result is NetworkResult.Success) {
+                fetchDataUseCase()
+            }
+            _state.postValue(result)
         }.launchIn(viewModelScope)
     }
 }
