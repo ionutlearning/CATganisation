@@ -1,38 +1,46 @@
 package com.example.catganisation.presentation.ui.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.catganisation.R
+import com.example.catganisation.databinding.BreedItemBinding
 import com.example.catganisation.domain.model.Breed
 import com.example.catganisation.presentation.ui.util.loadImage
 
-class BreedsAdapter(private val breeds: List<Breed>) :
-    RecyclerView.Adapter<BreedsAdapter.ViewHolder>() {
+class BreedsAdapter : ListAdapter<Breed, BreedsAdapter.ViewHolder>(DiffCallback()) {
 
-    class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(private val binding: BreedItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun setup(breed: Breed) {
-            view.findViewById<ImageView>(R.id.image).loadImage(breed.imagePath)
-            view.findViewById<TextView>(R.id.name).text = breed.name
-            view.findViewById<TextView>(R.id.description).text = breed.description
+            with(binding) {
+                image.loadImage(breed.imagePath)
+                name.text = breed.name
+                description.text = breed.description
+            }
         }
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.breed_item, viewGroup, false)
-
-        return ViewHolder(view)
+        val viewBinding =
+            BreedItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+        return ViewHolder(viewBinding)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.setup(breeds[position])
+        viewHolder.setup(getItem(position))
+    }
+}
+
+private class DiffCallback : DiffUtil.ItemCallback<Breed>() {
+
+    override fun areItemsTheSame(oldItem: Breed, newItem: Breed): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun getItemCount() = breeds.size
-
+    override fun areContentsTheSame(oldItem: Breed, newItem: Breed): Boolean {
+        return oldItem == newItem
+    }
 }

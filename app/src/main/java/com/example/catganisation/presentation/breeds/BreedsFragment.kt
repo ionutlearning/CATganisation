@@ -25,19 +25,22 @@ class BreedsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBreedsBinding.inflate(inflater, container, false)
+        val adapter = BreedsAdapter()
+        binding.breeds.adapter = adapter
+
+        subscribeUi(adapter)
+
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    private fun subscribeUi(adapter: BreedsAdapter) {
         viewModel.state.observe(viewLifecycleOwner, { state ->
             binding.progressBar.visibility = if (state is NetworkResult.Loading) VISIBLE else GONE
             binding.errorMessage.visibility = if (state is NetworkResult.Error) VISIBLE else GONE
             binding.breeds.visibility = if (state is NetworkResult.Success) VISIBLE else GONE
 
             when (state) {
-                is NetworkResult.Success -> binding.breeds.adapter = BreedsAdapter(state.data)
+                is NetworkResult.Success -> adapter.submitList(state.data)
                 is NetworkResult.Error -> binding.errorMessage.text = state.message
             }
         })

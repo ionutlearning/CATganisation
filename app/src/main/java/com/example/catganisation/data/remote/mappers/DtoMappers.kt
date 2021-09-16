@@ -6,6 +6,7 @@ import com.example.catganisation.domain.model.Breed
 import com.example.catganisation.domain.model.LoginResult
 
 fun BreedDto.toBreed() = Breed(
+    id = id,
     name = name,
     description = description,
     imagePath = image?.url
