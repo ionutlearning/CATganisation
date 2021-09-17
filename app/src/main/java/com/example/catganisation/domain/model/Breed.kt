@@ -6,8 +6,11 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Breed(
-    @PrimaryKey val id: String,
+    val id: String,
     val name: String,
     val description: String,
     @ColumnInfo(name = "image_path") val imagePath: String
-)
+) {
+    @PrimaryKey(autoGenerate = true)
+    var roomId: Int = 0
+}

@@ -1,14 +1,14 @@
 package com.example.catganisation.domain.usecase.fetchData
 
 import com.example.catganisation.domain.repository.FetchDataRepository
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class FetchDataUseCase @Inject constructor(
     private val repository: FetchDataRepository
 ) {
 
-    operator fun invoke() = flow<Nothing> {
+    suspend operator fun invoke() {
+        println("aici123 use case invoke start fetch")
         repository.fetchData()
     }
 }

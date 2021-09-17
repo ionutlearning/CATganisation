@@ -25,6 +25,7 @@ class LoginViewModel @Inject constructor(
     fun login(username: String, password: String) {
         loginUseCase(username, password).onEach { result ->
             if (result is NetworkResult.Success) {
+                println("aici123 gooo")
                 fetchDataUseCase()
             }
             _state.postValue(result)
