@@ -1,22 +1,19 @@
 package com.example.catganisation.data.local.database
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.catganisation.domain.model.Breed
 
 @Dao
 interface BreedDao {
     @Query("SELECT * FROM breed")
-    fun getAll(): List<Breed>
+    suspend fun getBreeds(): List<Breed>
 
     @Query("SELECT * FROM breed WHERE id IS :id")
-    fun getById(id: String): Breed
+    suspend fun getBreedById(id: String): Breed
 
-    @Insert
-    fun insertAll(vararg breed: Breed)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(breed: List<Breed>)
 
     @Delete
-    fun delete(breed: Breed)
+    suspend fun delete(breed: Breed)
 }
