@@ -2,11 +2,12 @@ package com.example.catganisation.data.local.database
 
 import androidx.room.*
 import com.example.catganisation.domain.model.Breed
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BreedDao {
     @Query("SELECT * FROM breed")
-    suspend fun getBreeds(): List<Breed>
+    fun getBreeds(): Flow<List<Breed>>
 
     @Query("SELECT * FROM breed WHERE id IS :id")
     suspend fun getBreedById(id: String): Breed

@@ -8,8 +8,11 @@ import com.example.catganisation.domain.NetworkResult
 import com.example.catganisation.domain.model.Breed
 import com.example.catganisation.domain.usecase.breeds.GetBreedsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -20,8 +23,17 @@ class BreedsViewModel @Inject constructor(useCase: GetBreedsUseCase) : ViewModel
     val state: LiveData<NetworkResult<List<Breed>>> = _state
 
     init {
-        useCase().onEach {
-            _state.postValue(it)
-        }.launchIn(viewModelScope)
+        viewModelScope.launch(Dispatchers.IO) {
+            useCase()
+                .onStart { _state.postValue(NetworkResult.Loading) }
+                .catch {
+                    _state.postValue(
+                        NetworkResult.Error(
+                            it.localizedMessage ?: "Unknown error"
+                        )
+                    )
+                }
+                .collect { _state.postValue(NetworkResult.Success(it)) }
+        }
     }
 }
