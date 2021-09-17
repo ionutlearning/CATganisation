@@ -4,7 +4,7 @@ import com.example.catganisation.data.remote.dto.BreedDto
 import retrofit2.http.GET
 import retrofit2.http.Headers
 
-interface CatService {
+interface BreedsService {
 
     @Headers("x-api-key:$API_KEY")
     @GET("/v1/breeds")

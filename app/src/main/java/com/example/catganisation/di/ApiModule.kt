@@ -1,6 +1,6 @@
 package com.example.catganisation.di
 
-import com.example.catganisation.data.remote.services.CatService
+import com.example.catganisation.data.remote.services.BreedsService
 import com.example.catganisation.data.remote.mock.LoggingInterceptor
 import com.example.catganisation.data.remote.services.LoginService
 import dagger.Module
@@ -18,12 +18,12 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun getCatService(): CatService {
+    fun getBreedsService(): BreedsService {
         return Retrofit.Builder()
-            .baseUrl(CatService.BASE_URL)
+            .baseUrl(BreedsService.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(CatService::class.java)
+            .create(BreedsService::class.java)
     }
 
     @Provides
