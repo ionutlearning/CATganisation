@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.catganisation.databinding.FragmentBreedsBinding
-import com.example.catganisation.domain.NetworkResult
+import com.example.catganisation.domain.ViewResult
 import com.example.catganisation.presentation.ui.adapters.BreedsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,13 +35,13 @@ class BreedsFragment : Fragment() {
 
     private fun subscribeUi(adapter: BreedsAdapter) {
         viewModel.state.observe(viewLifecycleOwner, { state ->
-            binding.progressBar.visibility = if (state is NetworkResult.Loading) VISIBLE else GONE
-            binding.errorMessage.visibility = if (state is NetworkResult.Error) VISIBLE else GONE
-            binding.breeds.visibility = if (state is NetworkResult.Success) VISIBLE else GONE
+            binding.progressBar.visibility = if (state is ViewResult.Loading) VISIBLE else GONE
+            binding.errorMessage.visibility = if (state is ViewResult.Error) VISIBLE else GONE
+            binding.breeds.visibility = if (state is ViewResult.Success) VISIBLE else GONE
 
             when (state) {
-                is NetworkResult.Success -> adapter.submitList(state.data)
-                is NetworkResult.Error -> binding.errorMessage.text = state.message
+                is ViewResult.Success -> adapter.submitList(state.data)
+                is ViewResult.Error -> binding.errorMessage.text = state.message
             }
         })
     }

@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.catganisation.R
 import com.example.catganisation.databinding.FragmentLoginBinding
-import com.example.catganisation.domain.NetworkResult
+import com.example.catganisation.domain.ViewResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,13 +33,13 @@ class LoginFragment : Fragment() {
 
         viewModel.state.observe(viewLifecycleOwner, { state ->
             binding.progressBar.visibility =
-                if (state is NetworkResult.Loading) View.VISIBLE else View.GONE
+                if (state is ViewResult.Loading) View.VISIBLE else View.GONE
             binding.errorMessage.visibility =
-                if (state is NetworkResult.Error) View.VISIBLE else View.GONE
+                if (state is ViewResult.Error) View.VISIBLE else View.GONE
 
             when (state) {
-                is NetworkResult.Success -> findNavController().navigate(R.id.action_loginFragment_to_breedsFragment)
-                is NetworkResult.Error -> {
+                is ViewResult.Success -> findNavController().navigate(R.id.action_loginFragment_to_breedsFragment)
+                is ViewResult.Error -> {
                     toggleViewsInteraction(true)
                     binding.errorMessage.text = state.message
                 }

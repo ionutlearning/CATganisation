@@ -1,6 +1,6 @@
 package com.example.catganisation.domain.usecase.login
 
-import com.example.catganisation.domain.NetworkResult
+import com.example.catganisation.domain.ViewResult
 import com.example.catganisation.domain.repository.LoginRepository
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -12,17 +12,17 @@ class LoginUseCase @Inject constructor(
 
     operator fun invoke(username: String, password: String) = flow {
         try {
-            emit(NetworkResult.Loading)
+            emit(ViewResult.Loading)
             val result = repository.login(username, password)
             if (result.status == 200) {
-                emit(NetworkResult.Success(true))
+                emit(ViewResult.Success(true))
 
             } else {
-                emit(NetworkResult.Error("Unknown error"))
+                emit(ViewResult.Error("Unknown error"))
             }
 
         } catch (e: HttpException) {
-            emit(NetworkResult.Error(e.localizedMessage ?: "Http error"))
+            emit(ViewResult.Error(e.localizedMessage ?: "Http error"))
         }
     }
 }
