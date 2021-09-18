@@ -41,7 +41,6 @@ class DetailsFragment : Fragment() {
         viewModel.viewState.observe(viewLifecycleOwner, { state ->
             binding.progressBar.visibility = if (state is ViewResult.Loading) VISIBLE else GONE
             binding.errorMessage.visibility = if (state is ViewResult.Error) VISIBLE else GONE
-            binding.breedContainer.visibility = if (state is ViewResult.Success) VISIBLE else GONE
 
             when (state) {
                 is ViewResult.Success -> setupView(state.data)
@@ -54,6 +53,8 @@ class DetailsFragment : Fragment() {
         with(binding) {
             name.text = breed.name
             description.text = breed.description
+            temperament.text = breed.temperament
+            link.text = breed.link
             origin.text = breed.origin
             image.loadImage(breed.imagePath)
         }

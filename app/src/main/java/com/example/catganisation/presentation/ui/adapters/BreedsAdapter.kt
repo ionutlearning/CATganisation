@@ -9,12 +9,12 @@ import com.example.catganisation.databinding.BreedItemBinding
 import com.example.catganisation.domain.model.Breed
 import com.example.catganisation.presentation.ui.util.loadImage
 
-class BreedsAdapter(private val onClickListener: (Int) -> Unit) :
+class BreedsAdapter(private val onClickListener: (String) -> Unit) :
     ListAdapter<Breed, BreedsAdapter.ViewHolder>(DiffCallback()) {
 
     class ViewHolder(
         private val binding: BreedItemBinding,
-        private val onClickListener: (Int) -> Unit
+        private val onClickListener: (String) -> Unit
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -24,7 +24,8 @@ class BreedsAdapter(private val onClickListener: (Int) -> Unit) :
                 name.text = breed.name
                 description.text = breed.description
 
-                root.setOnClickListener { onClickListener(breed.roomId) }
+                root.setOnClickListener { onClickListener(breed.id)
+                println("aici123 clicked ${breed.roomId}")}
             }
         }
     }

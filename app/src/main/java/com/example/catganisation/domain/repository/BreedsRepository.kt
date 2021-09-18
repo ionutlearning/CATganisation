@@ -9,5 +9,5 @@ interface BreedsRepository {
 
     fun getBreedsByOrigin(origin: String): Flow<List<Breed>>
 
-    fun getBreedById(id: Int): Flow<Breed>
+    fun getBreedById(id: String): Flow<Breed>
 }

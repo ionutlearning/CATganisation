@@ -37,7 +37,7 @@ class BreedsFragment : Fragment() {
         return binding.root
     }
 
-    private fun navigateToDetails(id: Int) {
+    private fun navigateToDetails(id: String) {
         findNavController().navigate(
             BreedsFragmentDirections.actionBreedsFragmentToDetailsFragment(
                 id
