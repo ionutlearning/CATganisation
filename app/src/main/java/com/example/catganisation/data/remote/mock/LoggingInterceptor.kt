@@ -33,6 +33,6 @@ class LoggingInterceptor : Interceptor {
         val buffer = Buffer()
         request?.writeTo(buffer)
         val body = buffer.readUtf8()
-        return body == "username=1&password=1"
+        return body == "username=admin&password=secret"
     }
 }
