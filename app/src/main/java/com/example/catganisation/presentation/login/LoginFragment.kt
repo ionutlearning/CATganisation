@@ -8,7 +8,6 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.catganisation.R
 import com.example.catganisation.databinding.FragmentLoginBinding
 import com.example.catganisation.domain.ViewResult
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,12 +24,24 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+        subscribeUi()
+
+        setupClickListeners()
+
+        validateInputs()
+
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun setupClickListeners() {
+        binding.loginBtn.setOnClickListener {
+            toggleViewsInteraction(false)
+            viewModel.login(binding.username.text.toString(), binding.password.text.toString())
+        }
+    }
 
+    private fun subscribeUi() {
         viewModel.state.observe(viewLifecycleOwner, { state ->
             binding.progressBar.visibility =
                 if (state is ViewResult.Loading) View.VISIBLE else View.GONE
@@ -45,12 +56,9 @@ class LoginFragment : Fragment() {
                 }
             }
         })
+    }
 
-        binding.loginBtn.setOnClickListener {
-            toggleViewsInteraction(false)
-            viewModel.login(binding.username.text.toString(), binding.password.text.toString())
-        }
-
+    private fun validateInputs() {
         binding.username.doAfterTextChanged {
             val isReadyToLogin =
                 it?.toString()!!.isNotEmpty() && binding.password.text.toString().isNotEmpty()
