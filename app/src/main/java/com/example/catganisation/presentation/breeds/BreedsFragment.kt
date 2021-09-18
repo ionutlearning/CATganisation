@@ -34,7 +34,7 @@ class BreedsFragment : Fragment() {
     }
 
     private fun subscribeUi(adapter: BreedsAdapter) {
-        viewModel.state.observe(viewLifecycleOwner, { state ->
+        viewModel.viewState.observe(viewLifecycleOwner, { state ->
             binding.progressBar.visibility = if (state is ViewResult.Loading) VISIBLE else GONE
             binding.errorMessage.visibility = if (state is ViewResult.Error) VISIBLE else GONE
             binding.breeds.visibility = if (state is ViewResult.Success) VISIBLE else GONE
