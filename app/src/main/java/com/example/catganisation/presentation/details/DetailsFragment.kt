@@ -1,11 +1,14 @@
 package com.example.catganisation.presentation.details
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.webkit.URLUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -54,10 +57,27 @@ class DetailsFragment : Fragment() {
             name.text = breed.name
             description.text = breed.description
             temperament.text = breed.temperament
-            link.text = breed.link
             origin.text = breed.origin
             image.loadImage(breed.imagePath)
         }
+
+        setupLink(breed.link)
+    }
+
+    private fun setupLink(link: String) {
+        with(binding.link) {
+            text = link
+            if (URLUtil.isValidUrl(link)) {
+                this.setOnClickListener {
+                    openUrlInBrowser(link)
+                }
+            }
+        }
+    }
+
+    private fun openUrlInBrowser(url: String) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(browserIntent)
     }
 
     override fun onDestroy() {
