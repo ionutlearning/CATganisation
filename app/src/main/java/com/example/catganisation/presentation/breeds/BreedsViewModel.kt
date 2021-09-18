@@ -67,6 +67,6 @@ class BreedsViewModel @Inject constructor(
     }
 
     companion object {
-        val ALL_BREEDS = "All Breeds"
+        const val ALL_BREEDS = "All Breeds"
     }
 }
