@@ -40,7 +40,7 @@ class BreedsFragment : Fragment() {
             binding.breeds.visibility = if (state is ViewResult.Success) VISIBLE else GONE
 
             when (state) {
-                is ViewResult.Success -> adapter.submitList(state.data)
+                is ViewResult.Success -> adapter.submitList(state.data.breeds)
                 is ViewResult.Error -> binding.errorMessage.text = state.message
             }
         })
