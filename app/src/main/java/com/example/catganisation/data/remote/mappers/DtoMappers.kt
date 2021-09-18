@@ -13,7 +13,7 @@ fun BreedDto.toBreed() = Breed(
         ?: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png",
     origin = origin,
     temperament = temperament,
-    link = wikipediaUrl
+    link = wikipediaUrl ?: "no url"
 )
 
 fun LoginDto.toLoginResult() = LoginResult(

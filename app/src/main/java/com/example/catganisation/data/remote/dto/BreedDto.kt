@@ -79,5 +79,5 @@ data class BreedDto(
     @SerializedName("weight")
     val weight: Weight,
     @SerializedName("wikipedia_url")
-    val wikipediaUrl: String
+    val wikipediaUrl: String?
 )
