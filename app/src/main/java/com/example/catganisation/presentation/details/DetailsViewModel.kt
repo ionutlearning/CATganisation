@@ -21,7 +21,7 @@ class DetailsViewModel @Inject constructor(
     private val _viewState = MutableLiveData<ViewResult<BreedEntity>>()
     val viewState = _viewState
 
-    fun getBreed(id: String) {
+    fun getBreedById(id: String) {
         println("aici123 details view getBreed ${id}")
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             _viewState.postValue(ViewResult.Error(e.localizedMessage ?: "Unknown error"))

@@ -32,7 +32,7 @@ class DetailsFragment : Fragment() {
         subscribeUi()
 
         val id = args.id
-        viewModel.getBreed(id)
+        viewModel.getBreedById(id)
 
         return binding.root
     }
