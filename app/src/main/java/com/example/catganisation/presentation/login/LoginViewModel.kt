@@ -8,6 +8,7 @@ import com.example.catganisation.domain.ViewResult
 import com.example.catganisation.domain.usecase.FetchDataTask
 import com.example.catganisation.domain.usecase.LoginTask
 import com.example.catganisation.presentation.ui.util.ConnectionHelper
+import com.example.catganisation.presentation.ui.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collect
@@ -22,7 +23,7 @@ class LoginViewModel @Inject constructor(
     private val connectionHelper: ConnectionHelper
 ) : ViewModel() {
 
-    private val _viewState = MutableLiveData<ViewResult<Boolean>>()
+    private val _viewState = SingleLiveEvent<ViewResult<Boolean>>()
     val viewState: LiveData<ViewResult<Boolean>> = _viewState
 
     fun login(username: String, password: String) {
