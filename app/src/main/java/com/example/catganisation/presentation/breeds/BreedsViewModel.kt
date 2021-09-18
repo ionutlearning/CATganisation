@@ -33,7 +33,7 @@ class BreedsViewModel @Inject constructor(
         _viewState.postValue(ViewResult.Loading)
         viewModelScope.launch(exceptionHandler) {
             getBreedsTask.getBreeds().combine(getFiltersTask()) { breeds, filters ->
-                BreedsViewState(breeds, filters)
+                BreedsViewState(breeds, filters, ALL_BREEDS)
             }.collect { state ->
                 _viewState.postValue(ViewResult.Success(state))
             }
@@ -58,7 +58,7 @@ class BreedsViewModel @Inject constructor(
                     }
 
                 breedsFlow.collect { breeds ->
-                    val state = BreedsViewState(breeds, isFiltering = true)
+                    val state = BreedsViewState(breeds, filter = filter, isFiltering = true)
                     _viewState.postValue(ViewResult.Success(state))
                     cachedFilter = filter
                 }

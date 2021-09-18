@@ -40,7 +40,7 @@ class BreedsFragment : Fragment() {
         viewModel.viewState.observe(viewLifecycleOwner, { state ->
             binding.progressBar.visibility = if (state is ViewResult.Loading) VISIBLE else GONE
             binding.errorMessage.visibility = if (state is ViewResult.Error) VISIBLE else GONE
-            binding.breeds.visibility = if (state is ViewResult.Success) VISIBLE else GONE
+            binding.breedsContainer.visibility = if (state is ViewResult.Success) VISIBLE else GONE
 
             when (state) {
                 is ViewResult.Success -> {
@@ -48,6 +48,7 @@ class BreedsFragment : Fragment() {
                     if (!state.data.isFiltering) {
                         setupFilterMenu(state.data.filters)
                     }
+                    binding.filterTitle.text = state.data.filter
                 }
                 is ViewResult.Error -> binding.errorMessage.text = state.message
             }
