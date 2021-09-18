@@ -17,15 +17,15 @@ import javax.inject.Inject
 @HiltViewModel
 class BreedsViewModel @Inject constructor(
     private val getBreedsTask: GetBreedsTask,
-    getFiltersTask: GetFiltersTask
+    private val getFiltersTask: GetFiltersTask
 ) : ViewModel() {
 
     private val _viewState = MutableLiveData<ViewResult<BreedsViewState>>()
     val viewState = _viewState
 
-    private var cachedFilter = ALL_BREEDS
+    var cachedFilter = ALL_BREEDS
 
-    init {
+    fun getBreeds() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             _viewState.postValue(ViewResult.Error(e.localizedMessage ?: "Unknown error"))
         }

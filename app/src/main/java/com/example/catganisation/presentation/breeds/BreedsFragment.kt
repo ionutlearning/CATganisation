@@ -29,6 +29,7 @@ class BreedsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBreedsBinding.inflate(inflater, container, false)
+        viewModel.getBreeds()
         val adapter = BreedsAdapter(::navigateToDetails)
         binding.breeds.adapter = adapter
 
