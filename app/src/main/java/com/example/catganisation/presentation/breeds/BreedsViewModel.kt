@@ -61,7 +61,7 @@ class BreedsViewModel @Inject constructor(
                     }
 
                 breedsFlow.collect { breeds ->
-                    val state = BreedsViewState(breeds, cachedFilters)
+                    val state = BreedsViewState(breeds, cachedFilters, true)
                     _viewState.postValue(ViewResult.Success(state))
                     cachedFilter = filter
                 }

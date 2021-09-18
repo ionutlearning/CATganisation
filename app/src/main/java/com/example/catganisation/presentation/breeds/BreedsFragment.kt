@@ -1,9 +1,11 @@
 package com.example.catganisation.presentation.breeds
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -43,7 +45,9 @@ class BreedsFragment : Fragment() {
             when (state) {
                 is ViewResult.Success -> {
                     adapter.submitList(state.data.breeds)
-                    setupFilterMenu(state.data.filters)
+                    if (!state.data.isFiltering) {
+                        setupFilterMenu(state.data.filters)
+                    }
                 }
                 is ViewResult.Error -> binding.errorMessage.text = state.message
             }
