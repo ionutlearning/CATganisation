@@ -49,11 +49,24 @@ class BreedsViewModel @Inject constructor(
 
         _viewState.postValue(ViewResult.Loading)
         viewModelScope.launch(exceptionHandler) {
-            getBreedsTask.getBreedsByOrigin(filter)
-                .collect { breeds ->
-                    val state = BreedsViewState(breeds, cachedFilters)
-                    _viewState.postValue(ViewResult.Success(state))
-                }
+            if (filter == ALL_BREEDS) {
+                getBreedsTask.getBreeds()
+                    .collect { breeds ->
+                        val state = BreedsViewState(breeds, cachedFilters)
+                        _viewState.postValue(ViewResult.Success(state))
+                    }
+
+            } else {
+                getBreedsTask.getBreedsByOrigin(filter)
+                    .collect { breeds ->
+                        val state = BreedsViewState(breeds, cachedFilters)
+                        _viewState.postValue(ViewResult.Success(state))
+                    }
+            }
         }
+    }
+
+    companion object {
+        val ALL_BREEDS = "All Breeds"
     }
 }
