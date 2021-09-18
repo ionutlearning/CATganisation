@@ -8,8 +8,9 @@ import com.example.catganisation.domain.ViewResult
 import com.example.catganisation.domain.usecase.FetchDataTask
 import com.example.catganisation.domain.usecase.LoginTask
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -19,16 +20,23 @@ class LoginViewModel @Inject constructor(
     private val fetchDataTask: FetchDataTask
 ) : ViewModel() {
 
-    private val _state = MutableLiveData<ViewResult<Boolean>>()
-    val state: LiveData<ViewResult<Boolean>> = _state
+    private val _viewState = MutableLiveData<ViewResult<Boolean>>()
+    val viewState: LiveData<ViewResult<Boolean>> = _viewState
 
     fun login(username: String, password: String) {
-        loginTask(username, password).onEach { result ->
-            if (result is ViewResult.Success) {
-                println("aici123 gooo")
-                fetchDataTask()
+        _viewState.postValue(ViewResult.Loading)
+
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            _viewState.postValue(ViewResult.Error(e.localizedMessage ?: "Unknown error"))
+        }
+
+        viewModelScope.launch(exceptionHandler) {
+            loginTask(username, password).collect { result ->
+                if (result.status == 200) {
+                    fetchDataTask()
+                    _viewState.postValue(ViewResult.Success(true))
+                }
             }
-            _state.postValue(result)
-        }.launchIn(viewModelScope)
+        }
     }
 }

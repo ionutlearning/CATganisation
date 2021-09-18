@@ -42,7 +42,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun subscribeUi() {
-        viewModel.state.observe(viewLifecycleOwner, { state ->
+        viewModel.viewState.observe(viewLifecycleOwner, { state ->
             binding.progressBar.visibility =
                 if (state is ViewResult.Loading) View.VISIBLE else View.GONE
             binding.errorMessage.visibility =

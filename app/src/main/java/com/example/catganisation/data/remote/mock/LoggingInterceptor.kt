@@ -15,7 +15,7 @@ class LoggingInterceptor : Interceptor {
             code = 200
 
         } else {
-            response = "{\"status\": " + 401 + ",\"message\": \"Unauthorized\"}"
+            response = "Invalid credentials"
             code = 401
         }
 
