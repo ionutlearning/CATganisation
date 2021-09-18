@@ -25,6 +25,7 @@ class BreedsViewModel @Inject constructor(
     val viewState = _viewState
 
     private var cachedFilters = emptyList<Filter>()
+    private var cachedFilter = ALL_BREEDS
 
     init {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
@@ -43,25 +44,27 @@ class BreedsViewModel @Inject constructor(
     }
 
     fun filter(filter: String) {
-        val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            _viewState.postValue(ViewResult.Error(e.localizedMessage ?: "Unknown error"))
-        }
+        if (cachedFilter != filter) {
+            println("aici filter $filter $cachedFilter")
+            val exceptionHandler = CoroutineExceptionHandler { _, e ->
+                _viewState.postValue(ViewResult.Error(e.localizedMessage ?: "Unknown error"))
+            }
 
-        _viewState.postValue(ViewResult.Loading)
-        viewModelScope.launch(exceptionHandler) {
-            if (filter == ALL_BREEDS) {
-                getBreedsTask.getBreeds()
-                    .collect { breeds ->
-                        val state = BreedsViewState(breeds, cachedFilters)
-                        _viewState.postValue(ViewResult.Success(state))
+            _viewState.postValue(ViewResult.Loading)
+            viewModelScope.launch(exceptionHandler) {
+
+                val breedsFlow =
+                    if (filter == ALL_BREEDS) {
+                        getBreedsTask.getBreeds()
+                    } else {
+                        getBreedsTask.getBreedsByOrigin(filter)
                     }
 
-            } else {
-                getBreedsTask.getBreedsByOrigin(filter)
-                    .collect { breeds ->
-                        val state = BreedsViewState(breeds, cachedFilters)
-                        _viewState.postValue(ViewResult.Success(state))
-                    }
+                breedsFlow.collect { breeds ->
+                    val state = BreedsViewState(breeds, cachedFilters)
+                    _viewState.postValue(ViewResult.Success(state))
+                    cachedFilter = filter
+                }
             }
         }
     }
