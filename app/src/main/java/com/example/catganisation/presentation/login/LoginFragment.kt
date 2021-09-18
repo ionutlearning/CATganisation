@@ -38,7 +38,7 @@ class LoginFragment : Fragment() {
                 if (state is ViewResult.Error) View.VISIBLE else View.GONE
 
             when (state) {
-                is ViewResult.Success -> findNavController().navigate(R.id.action_loginFragment_to_breedsFragment)
+                is ViewResult.Success -> findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToBreedsFragment())
                 is ViewResult.Error -> {
                     toggleViewsInteraction(true)
                     binding.errorMessage.text = state.message

@@ -15,6 +15,9 @@ interface BreedDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(breed: List<Breed>)
 
+    @Query("SELECT * FROM breed WHERE roomId IS :id")
+    fun getBreedById(id: Int): Flow<Breed>
+
     @Query("DELETE FROM breed")
     suspend fun deleteAll()
 }

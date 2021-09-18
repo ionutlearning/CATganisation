@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.catganisation.databinding.FragmentBreedsBinding
 import com.example.catganisation.domain.ViewResult
 import com.example.catganisation.domain.model.Filter
@@ -28,12 +29,20 @@ class BreedsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBreedsBinding.inflate(inflater, container, false)
-        val adapter = BreedsAdapter()
+        val adapter = BreedsAdapter(::navigateToDetails)
         binding.breeds.adapter = adapter
 
         subscribeUi(adapter)
 
         return binding.root
+    }
+
+    private fun navigateToDetails(id: Int) {
+        findNavController().navigate(
+            BreedsFragmentDirections.actionBreedsFragmentToDetailsFragment(
+                id
+            )
+        )
     }
 
     private fun subscribeUi(adapter: BreedsAdapter) {

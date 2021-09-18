@@ -9,9 +9,13 @@ import com.example.catganisation.databinding.BreedItemBinding
 import com.example.catganisation.domain.model.Breed
 import com.example.catganisation.presentation.ui.util.loadImage
 
-class BreedsAdapter : ListAdapter<Breed, BreedsAdapter.ViewHolder>(DiffCallback()) {
+class BreedsAdapter(private val onClickListener: (Int) -> Unit) :
+    ListAdapter<Breed, BreedsAdapter.ViewHolder>(DiffCallback()) {
 
-    class ViewHolder(private val binding: BreedItemBinding) :
+    class ViewHolder(
+        private val binding: BreedItemBinding,
+        private val onClickListener: (Int) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun setup(breed: Breed) {
@@ -19,6 +23,8 @@ class BreedsAdapter : ListAdapter<Breed, BreedsAdapter.ViewHolder>(DiffCallback(
                 image.loadImage(breed.imagePath)
                 name.text = breed.name
                 description.text = breed.description
+
+                root.setOnClickListener { onClickListener(breed.roomId) }
             }
         }
     }
@@ -26,7 +32,7 @@ class BreedsAdapter : ListAdapter<Breed, BreedsAdapter.ViewHolder>(DiffCallback(
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val viewBinding =
             BreedItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
-        return ViewHolder(viewBinding)
+        return ViewHolder(viewBinding, onClickListener)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {

@@ -19,4 +19,8 @@ class GetBreedsTask @Inject constructor(
             .transform { breeds -> if (breeds.isNotEmpty()) emit(breeds) }
     }
 
+    fun getBreedById(id: Int): Flow<Breed> {
+        return repository.getBreedById(id)
+    }
+
 }
