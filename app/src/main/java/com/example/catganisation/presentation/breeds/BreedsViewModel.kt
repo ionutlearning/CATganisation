@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.catganisation.domain.ViewResult
-import com.example.catganisation.domain.model.Filter
 import com.example.catganisation.domain.usecase.GetBreedsTask
 import com.example.catganisation.domain.usecase.GetFiltersTask
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +23,6 @@ class BreedsViewModel @Inject constructor(
     private val _viewState = MutableLiveData<ViewResult<BreedsViewState>>()
     val viewState = _viewState
 
-    private var cachedFilters = emptyList<Filter>()
     private var cachedFilter = ALL_BREEDS
 
     init {
@@ -35,7 +33,6 @@ class BreedsViewModel @Inject constructor(
         _viewState.postValue(ViewResult.Loading)
         viewModelScope.launch(exceptionHandler) {
             getBreedsTask.getBreeds().combine(getFiltersTask()) { breeds, filters ->
-                cachedFilters = filters
                 BreedsViewState(breeds, filters)
             }.collect { state ->
                 _viewState.postValue(ViewResult.Success(state))
@@ -61,7 +58,7 @@ class BreedsViewModel @Inject constructor(
                     }
 
                 breedsFlow.collect { breeds ->
-                    val state = BreedsViewState(breeds, cachedFilters, true)
+                    val state = BreedsViewState(breeds, isFiltering = true)
                     _viewState.postValue(ViewResult.Success(state))
                     cachedFilter = filter
                 }
