@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.catganisation.domain.ViewResult
-import com.example.catganisation.domain.model.Breed
+import com.example.catganisation.domain.entities.BreedEntity
 import com.example.catganisation.domain.usecase.GetBreedsTask
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -18,7 +18,7 @@ class DetailsViewModel @Inject constructor(
     private val getBreedsTask: GetBreedsTask
 ) : ViewModel() {
 
-    private val _viewState = MutableLiveData<ViewResult<Breed>>()
+    private val _viewState = MutableLiveData<ViewResult<BreedEntity>>()
     val viewState = _viewState
 
     fun getBreed(id: String) {

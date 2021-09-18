@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.catganisation.databinding.FragmentDetailsBinding
 import com.example.catganisation.domain.ViewResult
-import com.example.catganisation.domain.model.Breed
+import com.example.catganisation.domain.entities.BreedEntity
 import com.example.catganisation.presentation.ui.util.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,7 +49,7 @@ class DetailsFragment : Fragment() {
         })
     }
 
-    private fun setupView(breed: Breed) {
+    private fun setupView(breed: BreedEntity) {
         with(binding) {
             name.text = breed.name
             description.text = breed.description

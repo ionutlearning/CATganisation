@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.catganisation.databinding.BreedItemBinding
-import com.example.catganisation.domain.model.Breed
+import com.example.catganisation.domain.entities.BreedEntity
 import com.example.catganisation.presentation.ui.util.loadImage
 
 class BreedsAdapter(private val onClickListener: (String) -> Unit) :
-    ListAdapter<Breed, BreedsAdapter.ViewHolder>(DiffCallback()) {
+    ListAdapter<BreedEntity, BreedsAdapter.ViewHolder>(DiffCallback()) {
 
     class ViewHolder(
         private val binding: BreedItemBinding,
@@ -18,14 +18,15 @@ class BreedsAdapter(private val onClickListener: (String) -> Unit) :
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun setup(breed: Breed) {
+        fun setup(breed: BreedEntity) {
             with(binding) {
                 image.loadImage(breed.imagePath)
                 name.text = breed.name
                 description.text = breed.description
 
-                root.setOnClickListener { onClickListener(breed.id)
-                println("aici123 clicked ${breed.roomId}")}
+                root.setOnClickListener {
+                    onClickListener(breed.id)
+                }
             }
         }
     }
@@ -39,15 +40,15 @@ class BreedsAdapter(private val onClickListener: (String) -> Unit) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.setup(getItem(position))
     }
-}
 
-private class DiffCallback : DiffUtil.ItemCallback<Breed>() {
+    private class DiffCallback : DiffUtil.ItemCallback<BreedEntity>() {
 
-    override fun areItemsTheSame(oldItem: Breed, newItem: Breed): Boolean {
-        return oldItem.id == newItem.id
-    }
+        override fun areItemsTheSame(oldItem: BreedEntity, newItem: BreedEntity): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    override fun areContentsTheSame(oldItem: Breed, newItem: Breed): Boolean {
-        return oldItem == newItem
+        override fun areContentsTheSame(oldItem: BreedEntity, newItem: BreedEntity): Boolean {
+            return oldItem == newItem
+        }
     }
 }

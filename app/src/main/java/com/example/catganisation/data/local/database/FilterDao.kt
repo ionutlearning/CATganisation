@@ -1,7 +1,7 @@
 package com.example.catganisation.data.local.database
 
 import androidx.room.*
-import com.example.catganisation.domain.model.Filter
+import com.example.catganisation.data.local.model.Filter
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,11 +1,11 @@
 package com.example.catganisation.presentation.breeds
 
-import com.example.catganisation.domain.model.Breed
-import com.example.catganisation.domain.model.Filter
+import com.example.catganisation.domain.entities.BreedEntity
+import com.example.catganisation.domain.entities.FilterEntity
 
 data class BreedsViewState(
-    val breeds: List<Breed>,
-    val filters: List<Filter> = emptyList(),
+    val breeds: List<BreedEntity>,
+    val filters: List<FilterEntity> = emptyList(),
     val filter: String,
     val isFiltering: Boolean = false
 )

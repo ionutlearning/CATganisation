@@ -1,4 +1,4 @@
-package com.example.catganisation.domain.model
+package com.example.catganisation.data.local.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

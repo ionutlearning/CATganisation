@@ -6,9 +6,9 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.catganisation.data.local.database.BreedDao
 import com.example.catganisation.data.local.database.FilterDao
-import com.example.catganisation.data.remote.mappers.toBreed
+import com.example.catganisation.data.mappers.toBreed
 import com.example.catganisation.data.remote.services.BreedsService
-import com.example.catganisation.domain.model.Filter
+import com.example.catganisation.data.local.model.Filter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
