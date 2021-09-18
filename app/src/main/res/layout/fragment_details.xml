@@ -40,23 +40,14 @@
         tools:text="Origin" />
 
     <TextView
-        android:id="@+id/link"
-        android:layout_width="wrap_content"
+        android:id="@+id/temperament"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name"
-        tools:text="Link" />
-
-    <TextView
-        android:id="@+id/temperament"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:textSize="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name"
         tools:text="Temeperament" />
@@ -73,6 +64,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/temperament"
         tools:text="Description" />
+
+    <TextView
+        android:id="@+id/link"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/description"
+        tools:text="Link" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
