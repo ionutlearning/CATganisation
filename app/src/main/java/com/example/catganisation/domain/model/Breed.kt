@@ -9,7 +9,8 @@ data class Breed(
     val id: String,
     val name: String,
     val description: String,
-    @ColumnInfo(name = "image_path") val imagePath: String
+    @ColumnInfo(name = "image_path") val imagePath: String,
+    val origin: String
 ) {
     @PrimaryKey(autoGenerate = true)
     var roomId: Int = 0

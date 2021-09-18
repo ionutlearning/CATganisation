@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FilterDao {
 
-    @Query("SELECT * FROM filter")
+    @Query("SELECT * FROM filter  ORDER BY name")
     fun getFilters(): Flow<List<Filter>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

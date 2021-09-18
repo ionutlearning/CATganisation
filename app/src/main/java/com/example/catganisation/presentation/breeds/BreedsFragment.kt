@@ -1,15 +1,15 @@
 package com.example.catganisation.presentation.breeds
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.catganisation.databinding.FragmentBreedsBinding
 import com.example.catganisation.domain.ViewResult
+import com.example.catganisation.domain.model.Filter
 import com.example.catganisation.presentation.ui.adapters.BreedsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,10 +40,26 @@ class BreedsFragment : Fragment() {
             binding.breeds.visibility = if (state is ViewResult.Success) VISIBLE else GONE
 
             when (state) {
-                is ViewResult.Success -> adapter.submitList(state.data.breeds)
+                is ViewResult.Success -> {
+                    adapter.submitList(state.data.breeds)
+                    setupFilterMenu(state.data.filters)
+                }
                 is ViewResult.Error -> binding.errorMessage.text = state.message
             }
         })
+    }
+
+    private fun setupFilterMenu(filters: List<Filter>) {
+        val popupMenu = PopupMenu(requireContext(), binding.filterMenu)
+        filters.forEach { filter ->
+            popupMenu.menu.add(filter.name)
+        }
+        popupMenu.setOnMenuItemClickListener { item ->
+            viewModel.filter(item.title.toString())
+            false
+        }
+
+        binding.filterMenu.setOnClickListener { popupMenu.show() }
     }
 
     override fun onDestroy() {

@@ -10,8 +10,13 @@ class GetBreedsTask @Inject constructor(
     private val repository: BreedsRepository
 ) {
 
-    operator fun invoke(): Flow<List<Breed>> {
+    fun getBreeds(): Flow<List<Breed>> {
         return repository.getBreeds().transform { breeds -> if (breeds.isNotEmpty()) emit(breeds) }
+    }
+
+    fun getBreedsByOrigin(origin: String): Flow<List<Breed>> {
+        return repository.getBreedsByOrigin(origin)
+            .transform { breeds -> if (breeds.isNotEmpty()) emit(breeds) }
     }
 
 }

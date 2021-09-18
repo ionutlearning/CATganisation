@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface BreedsRepository {
 
     fun getBreeds() : Flow<List<Breed>>
+
+    fun getBreedsByOrigin(origin: String) : Flow<List<Breed>>
 }

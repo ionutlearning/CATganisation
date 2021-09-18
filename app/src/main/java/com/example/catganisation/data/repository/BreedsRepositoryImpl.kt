@@ -11,4 +11,8 @@ class BreedsRepositoryImpl @Inject constructor(private val breedDao: BreedDao) :
     override fun getBreeds(): Flow<List<Breed>> {
         return breedDao.getBreeds()
     }
+
+    override fun getBreedsByOrigin(origin: String): Flow<List<Breed>> {
+        return breedDao.getBreedByOrigin(origin)
+    }
 }
