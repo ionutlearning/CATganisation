@@ -19,7 +19,6 @@ class BreedsRepositoryImpl @Inject constructor(private val breedDao: BreedDao) :
     }
 
     override fun getBreedById(id: String): Flow<BreedEntity> {
-        println("aici123 rep impl ${id}")
         return breedDao.getBreedById(id).transform { emit(it.toBreedEntity()) }
     }
 }

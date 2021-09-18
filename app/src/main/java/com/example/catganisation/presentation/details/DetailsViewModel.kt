@@ -22,7 +22,6 @@ class DetailsViewModel @Inject constructor(
     val viewState = _viewState
 
     fun getBreedById(id: String) {
-        println("aici123 details view getBreed ${id}")
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             _viewState.postValue(ViewResult.Error(e.localizedMessage ?: "Unknown error"))
         }
@@ -30,7 +29,6 @@ class DetailsViewModel @Inject constructor(
         _viewState.postValue(ViewResult.Loading)
         viewModelScope.launch(exceptionHandler) {
             getBreedsTask.getBreedById(id).collect { breed ->
-                println("aici123 success ${breed}")
                 _viewState.postValue(ViewResult.Success(breed))
             }
         }

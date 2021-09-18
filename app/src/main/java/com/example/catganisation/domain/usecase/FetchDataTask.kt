@@ -8,7 +8,6 @@ class FetchDataTask @Inject constructor(
 ) {
 
     suspend operator fun invoke() {
-        println("aici123 use case invoke start fetch")
         repository.fetchData()
     }
 }

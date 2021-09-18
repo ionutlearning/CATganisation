@@ -20,7 +20,6 @@ class GetBreedsTask @Inject constructor(
     }
 
     fun getBreedById(id: String): Flow<BreedEntity> {
-        println("aici123 UC ${id}")
         return repository.getBreedById(id)
     }
 

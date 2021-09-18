@@ -41,7 +41,6 @@ class FetchWorker @AssistedInject constructor(
             Result.success()
 
         } catch (e: Exception) {
-            println("aici123 ${e.localizedMessage}")
             Result.retry()
         }
     }

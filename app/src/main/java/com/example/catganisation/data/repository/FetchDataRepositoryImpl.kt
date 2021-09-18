@@ -15,8 +15,6 @@ class FetchDataRepositoryImpl @Inject constructor(
 ) : FetchDataRepository {
 
     override suspend fun fetchData() {
-        println("aici123 start fetch")
-
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
