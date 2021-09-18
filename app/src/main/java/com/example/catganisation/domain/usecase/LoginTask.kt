@@ -1,4 +1,4 @@
-package com.example.catganisation.domain.usecase.login
+package com.example.catganisation.domain.usecase
 
 import com.example.catganisation.domain.ViewResult
 import com.example.catganisation.domain.repository.LoginRepository
@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import javax.inject.Inject
 
-class LoginUseCase @Inject constructor(
+class LoginTask @Inject constructor(
     private val repository: LoginRepository
 ) {
 

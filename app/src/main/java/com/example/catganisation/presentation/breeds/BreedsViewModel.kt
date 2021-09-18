@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.catganisation.domain.ViewResult
 import com.example.catganisation.domain.usecase.GetFiltersTask
-import com.example.catganisation.domain.usecase.breeds.GetBreedsUseCase
+import com.example.catganisation.domain.usecase.GetBreedsTask
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collect
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BreedsViewModel @Inject constructor(
-    getBreedsTask: GetBreedsUseCase,
+    getBreedsTask: GetBreedsTask,
     getFiltersTask: GetFiltersTask
 ) : ViewModel() {
 

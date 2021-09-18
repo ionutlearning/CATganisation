@@ -1,4 +1,4 @@
-package com.example.catganisation.domain.usecase.breeds
+package com.example.catganisation.domain.usecase
 
 import com.example.catganisation.domain.model.Breed
 import com.example.catganisation.domain.repository.BreedsRepository
@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 
-class GetBreedsUseCase @Inject constructor(
+class GetBreedsTask @Inject constructor(
     private val repository: BreedsRepository
 ) {
 

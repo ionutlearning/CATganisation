@@ -1,9 +1,9 @@
-package com.example.catganisation.domain.usecase.fetchData
+package com.example.catganisation.domain.usecase
 
 import com.example.catganisation.domain.repository.FetchDataRepository
 import javax.inject.Inject
 
-class FetchDataUseCase @Inject constructor(
+class FetchDataTask @Inject constructor(
     private val repository: FetchDataRepository
 ) {
 
