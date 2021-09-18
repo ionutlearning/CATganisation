@@ -1,6 +1,8 @@
 package com.example.catganisation.data.repository
 
 import android.content.Context
+import androidx.work.Constraints
+import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.catganisation.data.local.worker.FetchWorker
@@ -14,7 +16,13 @@ class FetchDataRepositoryImpl @Inject constructor(
 
     override suspend fun fetchData() {
         println("aici123 start fetch")
+
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
         val request = OneTimeWorkRequestBuilder<FetchWorker>()
+            .setConstraints(constraints)
             .build()
         WorkManager.getInstance(appContext).enqueue(request)
     }
