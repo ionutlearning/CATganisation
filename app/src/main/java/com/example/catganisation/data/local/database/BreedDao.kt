@@ -15,6 +15,6 @@ interface BreedDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(breed: List<Breed>)
 
-    @Delete
-    suspend fun delete(breed: Breed)
+    @Query("DELETE FROM breed")
+    suspend fun deleteAll()
 }

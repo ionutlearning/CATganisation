@@ -13,6 +13,6 @@ interface FilterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(filters: List<Filter>)
 
-    @Delete
-    suspend fun delete(filter: Filter)
+    @Query("DELETE FROM filter")
+    suspend fun deleteAll()
 }

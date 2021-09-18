@@ -25,6 +25,8 @@ class FetchWorker @AssistedInject constructor(
     CoroutineWorker(appContext, workerParams) {
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
+            resetTables()
+
             val countries = mutableListOf<String>()
             val breeds = service.getBreeds().map {
                 countries.add(it.origin)
@@ -42,5 +44,10 @@ class FetchWorker @AssistedInject constructor(
             println("aici123 ${e.localizedMessage}")
             Result.retry()
         }
+    }
+
+    private suspend fun resetTables() {
+        breedDao.deleteAll()
+        filterDao.deleteAll()
     }
 }
