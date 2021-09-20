@@ -1,10 +1,10 @@
 package com.example.catganisation.presentation.login
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.catganisation.domain.ViewResult
+import com.example.catganisation.domain.usecase.CachedTask
 import com.example.catganisation.domain.usecase.FetchDataTask
 import com.example.catganisation.domain.usecase.LoginTask
 import com.example.catganisation.presentation.ui.util.ConnectionHelper
@@ -20,6 +20,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val loginTask: LoginTask,
     private val fetchDataTask: FetchDataTask,
+    private val cachedTask: CachedTask,
     private val connectionHelper: ConnectionHelper
 ) : ViewModel() {
 
@@ -36,7 +37,9 @@ class LoginViewModel @Inject constructor(
             viewModelScope.launch(exceptionHandler) {
                 loginTask(username, password).collect { result ->
                     if (result.status == 200) {
-                        fetchDataTask()
+                        if (!cachedTask.isCached()) {
+                            fetchDataTask()
+                        }
                         _viewState.postValue(ViewResult.Success(true))
                     }
                 }

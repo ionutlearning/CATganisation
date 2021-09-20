@@ -1,13 +1,7 @@
 package com.example.catganisation.di
 
-import com.example.catganisation.data.repository.BreedsRepositoryImpl
-import com.example.catganisation.data.repository.FetchDataRepositoryImpl
-import com.example.catganisation.data.repository.FiltersRepositoryImpl
-import com.example.catganisation.data.repository.LoginRepositoryImpl
-import com.example.catganisation.domain.repository.BreedsRepository
-import com.example.catganisation.domain.repository.FetchDataRepository
-import com.example.catganisation.domain.repository.FiltersRepository
-import com.example.catganisation.domain.repository.LoginRepository
+import com.example.catganisation.data.repository.*
+import com.example.catganisation.domain.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -37,4 +31,9 @@ abstract class RepositoryModule {
     abstract fun bindFiltersRepository(
         impl: FiltersRepositoryImpl
     ): FiltersRepository
+
+    @Binds
+    abstract fun bindCachedPrefsRepository(
+        impl: CachedPrefsRepositoryImpl
+    ): CachedPrefsRepository
 }
