@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.catganisation.domain.ViewResult
 import com.example.catganisation.domain.entities.Breed
-import com.example.catganisation.domain.usecase.GetBreedsTask
+import com.example.catganisation.domain.usecase.GetBreedByIdTask
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collect
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    private val getBreedsTask: GetBreedsTask
+    private val getBreedByIdTask: GetBreedByIdTask
 ) : ViewModel() {
 
     private val _viewState = MutableLiveData<ViewResult<Breed>>()
@@ -28,7 +28,7 @@ class DetailsViewModel @Inject constructor(
 
         _viewState.postValue(ViewResult.Loading)
         viewModelScope.launch(exceptionHandler) {
-            getBreedsTask.getBreedById(id).collect { breed ->
+            getBreedByIdTask(id).collect { breed ->
                 _viewState.postValue(ViewResult.Success(breed))
             }
         }

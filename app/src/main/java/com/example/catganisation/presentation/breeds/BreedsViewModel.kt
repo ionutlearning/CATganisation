@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.catganisation.domain.ViewResult
+import com.example.catganisation.domain.usecase.GetBreedsByOriginTask
 import com.example.catganisation.domain.usecase.GetBreedsTask
 import com.example.catganisation.domain.usecase.GetFiltersTask
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BreedsViewModel @Inject constructor(
     private val getBreedsTask: GetBreedsTask,
+    private val getBreedsByOriginTask: GetBreedsByOriginTask,
     private val getFiltersTask: GetFiltersTask
 ) : ViewModel() {
 
@@ -32,7 +34,7 @@ class BreedsViewModel @Inject constructor(
 
         _viewState.postValue(ViewResult.Loading)
         viewModelScope.launch(exceptionHandler) {
-            getBreedsTask.getBreeds().combine(getFiltersTask()) { breeds, filters ->
+            getBreedsTask().combine(getFiltersTask()) { breeds, filters ->
                 BreedsViewState(breeds, filters, ALL_BREEDS)
             }.collect { state ->
                 _viewState.postValue(ViewResult.Success(state))
@@ -52,9 +54,9 @@ class BreedsViewModel @Inject constructor(
 
                 val breedsFlow =
                     if (filter == ALL_BREEDS) {
-                        getBreedsTask.getBreeds()
+                        getBreedsTask()
                     } else {
-                        getBreedsTask.getBreedsByOrigin(filter)
+                        getBreedsByOriginTask(filter)
                     }
 
                 breedsFlow.collect { breeds ->

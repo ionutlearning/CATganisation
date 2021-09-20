@@ -6,11 +6,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 
-class GetBreedsTask @Inject constructor(
+class GetBreedsByOriginTask @Inject constructor(
     private val repository: BreedsRepository
 ) {
 
-    operator fun invoke(): Flow<List<Breed>> {
-        return repository.getBreeds().transform { breeds -> if (breeds.isNotEmpty()) emit(breeds) }
+    operator fun invoke(origin: String): Flow<List<Breed>> {
+        return repository.getBreedsByOrigin(origin)
+            .transform { breeds -> if (breeds.isNotEmpty()) emit(breeds) }
     }
 }
