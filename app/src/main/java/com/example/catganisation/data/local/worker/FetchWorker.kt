@@ -37,7 +37,6 @@ class FetchWorker @AssistedInject constructor(
             val filters = countries.distinct().map { FilterEntity(it) }
             filterDao.insertAll(filters)
 
-            println("aici breeds: ${breeds.size}  -  filters: ${filters.size}")
             Result.success()
 
         } catch (e: Exception) {

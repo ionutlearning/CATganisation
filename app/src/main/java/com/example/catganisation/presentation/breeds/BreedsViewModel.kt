@@ -44,7 +44,6 @@ class BreedsViewModel @Inject constructor(
 
     fun filter(filter: String) {
         if (cachedFilter != filter) {
-            println("aici filter $filter $cachedFilter")
             val exceptionHandler = CoroutineExceptionHandler { _, e ->
                 _viewState.postValue(ViewResult.Error(e.localizedMessage ?: "Unknown error"))
             }
