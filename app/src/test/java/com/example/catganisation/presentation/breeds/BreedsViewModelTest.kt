@@ -3,6 +3,7 @@ package com.example.catganisation.presentation.breeds
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.catganisation.*
 import com.example.catganisation.domain.ViewResult
+import com.example.catganisation.domain.usecase.GetBreedsByOriginTask
 import com.example.catganisation.domain.usecase.GetBreedsTask
 import com.example.catganisation.domain.usecase.GetFiltersTask
 import io.mockk.MockKAnnotations
@@ -24,15 +25,18 @@ class BreedsViewModelTest {
     private lateinit var viewModel: BreedsViewModel
 
     @MockK
-    private lateinit var breedsTask: GetBreedsTask
+    private lateinit var getBreedsTask: GetBreedsTask
 
     @MockK
-    private lateinit var filtersTask: GetFiltersTask
+    private lateinit var getBreedsByOriginTask: GetBreedsByOriginTask
+
+    @MockK
+    private lateinit var getFiltersTask: GetFiltersTask
 
     @Before
     fun setup() {
         MockKAnnotations.init(this, relaxed = true)
-        viewModel = BreedsViewModel(breedsTask, filtersTask)
+        viewModel = BreedsViewModel(getBreedsTask, getBreedsByOriginTask, getFiltersTask)
     }
 
     @Test
@@ -47,8 +51,8 @@ class BreedsViewModelTest {
                 )
             )
 
-            coEvery { breedsTask.getBreeds() } returns taskResult
-            coEvery { filtersTask() } returns filterResult
+            coEvery { getBreedsTask() } returns taskResult
+            coEvery { getFiltersTask() } returns filterResult
 
             viewModel.getBreeds()
             Assert.assertEquals(viewModel.viewState.getOrAwaitValue(), liveDataResult)
@@ -60,8 +64,8 @@ class BreedsViewModelTest {
             val filterResult = flowOf(listOf(filter))
             val liveDataResult = ViewResult.Error(errorMessage)
 
-            coEvery { breedsTask.getBreeds() } throws RuntimeException(errorMessage)
-            coEvery { filtersTask() } returns filterResult
+            coEvery { getBreedsTask() } throws RuntimeException(errorMessage)
+            coEvery { getFiltersTask() } returns filterResult
 
             viewModel.getBreeds()
             Assert.assertEquals(viewModel.viewState.getOrAwaitValue(), liveDataResult)
@@ -73,8 +77,8 @@ class BreedsViewModelTest {
             val taskResult = flowOf(listOf(breed))
             val liveDataResult = ViewResult.Error(errorMessage)
 
-            coEvery { breedsTask.getBreeds() } returns taskResult
-            coEvery { filtersTask() } throws RuntimeException(errorMessage)
+            coEvery { getBreedsTask() } returns taskResult
+            coEvery { getFiltersTask() } throws RuntimeException(errorMessage)
 
             viewModel.getBreeds()
             Assert.assertEquals(viewModel.viewState.getOrAwaitValue(), liveDataResult)
@@ -86,7 +90,7 @@ class BreedsViewModelTest {
             val taskResult = flowOf(listOf(breed))
             val liveDataResult = ViewResult.Success(filteredFranceViewState)
 
-            coEvery { breedsTask.getBreedsByOrigin(filterFrance) } returns taskResult
+            coEvery { getBreedsByOriginTask(filterFrance) } returns taskResult
 
             viewModel.filter(filterFrance)
             Assert.assertEquals(viewModel.viewState.getOrAwaitValue(), liveDataResult)
@@ -97,7 +101,7 @@ class BreedsViewModelTest {
         mainCoroutineRule.runBlockingTest {
             val liveDataResult = ViewResult.Error(errorMessage)
 
-            coEvery { breedsTask.getBreedsByOrigin(filterFrance) } throws RuntimeException(
+            coEvery { getBreedsByOriginTask(filterFrance) } throws RuntimeException(
                 errorMessage
             )
 
@@ -111,7 +115,7 @@ class BreedsViewModelTest {
             val taskResult = flowOf(listOf(breed))
             val liveDataResult = ViewResult.Success(filteredAllBreedsViewState)
 
-            coEvery { breedsTask.getBreeds() } returns taskResult
+            coEvery { getBreedsTask() } returns taskResult
 
             viewModel.cachedFilter = filterFrance
             viewModel.filter(filterAllBreeds)
@@ -123,7 +127,7 @@ class BreedsViewModelTest {
         mainCoroutineRule.runBlockingTest {
             val liveDataResult = ViewResult.Error(errorMessage)
 
-            coEvery { breedsTask.getBreeds() } throws RuntimeException(errorMessage)
+            coEvery { getBreedsTask() } throws RuntimeException(errorMessage)
 
             viewModel.cachedFilter = filterFrance
             viewModel.filter(filterAllBreeds)
