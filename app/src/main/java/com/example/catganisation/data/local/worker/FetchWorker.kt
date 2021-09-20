@@ -8,7 +8,7 @@ import com.example.catganisation.data.local.database.BreedDao
 import com.example.catganisation.data.local.database.FilterDao
 import com.example.catganisation.data.mappers.toBreed
 import com.example.catganisation.data.remote.services.BreedsService
-import com.example.catganisation.data.local.model.Filter
+import com.example.catganisation.data.local.model.FilterEntity
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +34,7 @@ class FetchWorker @AssistedInject constructor(
             }
             breedDao.insertAll(breeds)
 
-            val filters = countries.distinct().map { Filter(it) }
+            val filters = countries.distinct().map { FilterEntity(it) }
             filterDao.insertAll(filters)
 
             println("aici breeds: ${breeds.size}  -  filters: ${filters.size}")

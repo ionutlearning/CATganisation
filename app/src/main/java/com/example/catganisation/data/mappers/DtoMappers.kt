@@ -2,13 +2,11 @@ package com.example.catganisation.data.mappers
 
 import com.example.catganisation.data.remote.dto.BreedDto
 import com.example.catganisation.data.remote.dto.LoginDto
-import com.example.catganisation.data.local.model.Breed
-import com.example.catganisation.data.local.model.Filter
 import com.example.catganisation.domain.entities.BreedEntity
 import com.example.catganisation.domain.entities.FilterEntity
 import com.example.catganisation.domain.entities.LoginEntity
 
-fun BreedDto.toBreed() = Breed(
+fun BreedDto.toBreed() = com.example.catganisation.data.local.model.BreedEntity(
     id = id,
     name = name,
     description = description,
@@ -24,7 +22,7 @@ fun LoginDto.toLoginResult() = LoginEntity(
     message = message
 )
 
-fun Breed.toBreedEntity() = BreedEntity(
+fun com.example.catganisation.data.local.model.BreedEntity.toBreedEntity() = BreedEntity(
     id = id,
     name = name,
     description = description,
@@ -34,6 +32,6 @@ fun Breed.toBreedEntity() = BreedEntity(
     link = link
 )
 
-fun Filter.toFilterEntity() = FilterEntity(
+fun com.example.catganisation.data.local.model.FilterEntity.toFilterEntity() = FilterEntity(
     name = name
 )

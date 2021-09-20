@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
-data class Breed(
+@Entity(tableName = "breeds")
+data class BreedEntity(
     val id: String,
     val name: String,
     val description: String,
