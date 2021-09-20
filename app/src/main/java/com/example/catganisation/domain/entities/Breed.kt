@@ -1,6 +1,6 @@
 package com.example.catganisation.domain.entities
 
-data class BreedEntity(
+data class Breed(
     val id: String,
     val name: String,
     val description: String,

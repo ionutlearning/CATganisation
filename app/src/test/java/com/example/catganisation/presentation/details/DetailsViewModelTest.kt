@@ -35,7 +35,7 @@ class DetailsViewModelTest {
     @Test
     fun `getBreedById returns liveData with Success`() =
         mainCoroutineRule.runBlockingTest {
-            val breed = breedEntity
+            val breed = breed
             val taskResult = flowOf(breed)
             val liveDataResult = ViewResult.Success(breed)
 

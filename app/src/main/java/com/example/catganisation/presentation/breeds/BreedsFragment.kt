@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.catganisation.databinding.FragmentBreedsBinding
 import com.example.catganisation.domain.ViewResult
-import com.example.catganisation.domain.entities.FilterEntity
+import com.example.catganisation.domain.entities.Filter
 import com.example.catganisation.presentation.breeds.BreedsViewModel.Companion.ALL_BREEDS
 import com.example.catganisation.presentation.ui.adapters.BreedsAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,7 +65,7 @@ class BreedsFragment : Fragment() {
         })
     }
 
-    private fun setupFilterMenu(filters: List<FilterEntity>) {
+    private fun setupFilterMenu(filters: List<Filter>) {
         val popupMenu = PopupMenu(requireContext(), binding.filterMenu)
         popupMenu.menu.add(ALL_BREEDS)
         filters.forEach { filter ->

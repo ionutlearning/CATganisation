@@ -1,6 +1,6 @@
 package com.example.catganisation.domain.entities
 
-data class LoginEntity(
+data class Login(
     val status: Int,
     val message: String
 )

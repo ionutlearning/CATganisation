@@ -38,11 +38,11 @@ class BreedsViewModelTest {
     @Test
     fun `getBreeds returns liveData with Success`() =
         mainCoroutineRule.runBlockingTest {
-            val taskResult = flowOf(listOf(breedEntity))
-            val filterResult = flowOf(listOf(filterEntity))
+            val taskResult = flowOf(listOf(breed))
+            val filterResult = flowOf(listOf(filter))
             val liveDataResult = ViewResult.Success(
                 BreedsViewState(
-                    listOf(breedEntity), listOf(filterEntity),
+                    listOf(breed), listOf(filter),
                     BreedsViewModel.ALL_BREEDS
                 )
             )
@@ -57,7 +57,7 @@ class BreedsViewModelTest {
     @Test
     fun `getBreeds returns liveData with Error when breedsTask throws error`() =
         mainCoroutineRule.runBlockingTest {
-            val filterResult = flowOf(listOf(filterEntity))
+            val filterResult = flowOf(listOf(filter))
             val liveDataResult = ViewResult.Error(errorMessage)
 
             coEvery { breedsTask.getBreeds() } throws RuntimeException(errorMessage)
@@ -70,7 +70,7 @@ class BreedsViewModelTest {
     @Test
     fun `getBreeds returns liveData with Error when filterTask throws error`() =
         mainCoroutineRule.runBlockingTest {
-            val taskResult = flowOf(listOf(breedEntity))
+            val taskResult = flowOf(listOf(breed))
             val liveDataResult = ViewResult.Error(errorMessage)
 
             coEvery { breedsTask.getBreeds() } returns taskResult
@@ -83,7 +83,7 @@ class BreedsViewModelTest {
     @Test
     fun `filter returns liveData with Success with France filter`() =
         mainCoroutineRule.runBlockingTest {
-            val taskResult = flowOf(listOf(breedEntity))
+            val taskResult = flowOf(listOf(breed))
             val liveDataResult = ViewResult.Success(filteredFranceViewState)
 
             coEvery { breedsTask.getBreedsByOrigin(filterFrance) } returns taskResult
@@ -108,7 +108,7 @@ class BreedsViewModelTest {
     @Test
     fun `filter returns liveData with Success with All Breeds filter`() =
         mainCoroutineRule.runBlockingTest {
-            val taskResult = flowOf(listOf(breedEntity))
+            val taskResult = flowOf(listOf(breed))
             val liveDataResult = ViewResult.Success(filteredAllBreedsViewState)
 
             coEvery { breedsTask.getBreeds() } returns taskResult

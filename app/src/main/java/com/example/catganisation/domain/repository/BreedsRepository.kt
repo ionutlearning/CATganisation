@@ -1,13 +1,13 @@
 package com.example.catganisation.domain.repository
 
-import com.example.catganisation.domain.entities.BreedEntity
+import com.example.catganisation.domain.entities.Breed
 import kotlinx.coroutines.flow.Flow
 
 interface BreedsRepository {
 
-    fun getBreeds(): Flow<List<BreedEntity>>
+    fun getBreeds(): Flow<List<Breed>>
 
-    fun getBreedsByOrigin(origin: String): Flow<List<BreedEntity>>
+    fun getBreedsByOrigin(origin: String): Flow<List<Breed>>
 
-    fun getBreedById(id: String): Flow<BreedEntity>
+    fun getBreedById(id: String): Flow<Breed>
 }

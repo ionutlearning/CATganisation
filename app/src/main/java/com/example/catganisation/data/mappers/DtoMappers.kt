@@ -1,12 +1,14 @@
 package com.example.catganisation.data.mappers
 
+import com.example.catganisation.data.local.model.BreedEntity
+import com.example.catganisation.data.local.model.FilterEntity
 import com.example.catganisation.data.remote.dto.BreedDto
 import com.example.catganisation.data.remote.dto.LoginDto
-import com.example.catganisation.domain.entities.BreedEntity
-import com.example.catganisation.domain.entities.FilterEntity
-import com.example.catganisation.domain.entities.LoginEntity
+import com.example.catganisation.domain.entities.Breed
+import com.example.catganisation.domain.entities.Filter
+import com.example.catganisation.domain.entities.Login
 
-fun BreedDto.toBreed() = com.example.catganisation.data.local.model.BreedEntity(
+fun BreedDto.toBreed() = BreedEntity(
     id = id,
     name = name,
     description = description,
@@ -17,12 +19,12 @@ fun BreedDto.toBreed() = com.example.catganisation.data.local.model.BreedEntity(
     link = wikipediaUrl ?: "no url"
 )
 
-fun LoginDto.toLoginResult() = LoginEntity(
+fun LoginDto.toLoginResult() = Login(
     status = status,
     message = message
 )
 
-fun com.example.catganisation.data.local.model.BreedEntity.toBreedEntity() = BreedEntity(
+fun BreedEntity.toBreedEntity() = Breed(
     id = id,
     name = name,
     description = description,
@@ -32,6 +34,6 @@ fun com.example.catganisation.data.local.model.BreedEntity.toBreedEntity() = Bre
     link = link
 )
 
-fun com.example.catganisation.data.local.model.FilterEntity.toFilterEntity() = FilterEntity(
+fun FilterEntity.toFilterEntity() = Filter(
     name = name
 )
