@@ -1,5 +1,6 @@
 package com.example.catganisation.presentation.details
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,7 +20,7 @@ class DetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _viewState = MutableLiveData<ViewResult<Breed>>()
-    val viewState = _viewState
+    val viewState: LiveData<ViewResult<Breed>> = _viewState
 
     fun getBreedById(id: String) {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->

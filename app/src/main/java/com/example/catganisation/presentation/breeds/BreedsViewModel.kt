@@ -1,9 +1,11 @@
 package com.example.catganisation.presentation.breeds
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.catganisation.domain.ViewResult
+import com.example.catganisation.domain.entities.Filter
 import com.example.catganisation.domain.usecase.GetBreedsByOriginTask
 import com.example.catganisation.domain.usecase.GetBreedsTask
 import com.example.catganisation.domain.usecase.GetFiltersTask
@@ -22,12 +24,13 @@ class BreedsViewModel @Inject constructor(
     private val getFiltersTask: GetFiltersTask
 ) : ViewModel() {
 
+    private var cachedFilters = emptyList<Filter>()
     private val _viewState = MutableLiveData<ViewResult<BreedsViewState>>()
-    val viewState = _viewState
 
+    val viewState: LiveData<ViewResult<BreedsViewState>> = _viewState
     var cachedFilter = ALL_BREEDS
 
-    fun getBreeds() {
+    init {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             _viewState.postValue(ViewResult.Error(e.localizedMessage ?: "Unknown error"))
         }
@@ -35,7 +38,8 @@ class BreedsViewModel @Inject constructor(
         _viewState.postValue(ViewResult.Loading)
         viewModelScope.launch(exceptionHandler) {
             getBreedsTask().combine(getFiltersTask()) { breeds, filters ->
-                BreedsViewState(breeds, filters, ALL_BREEDS)
+                cachedFilters = filters
+                BreedsViewState(breeds, cachedFilters, ALL_BREEDS)
             }.collect { state ->
                 _viewState.postValue(ViewResult.Success(state))
             }
@@ -59,7 +63,7 @@ class BreedsViewModel @Inject constructor(
                     }
 
                 breedsFlow.collect { breeds ->
-                    val state = BreedsViewState(breeds, filter = filter, isFiltering = true)
+                    val state = BreedsViewState(breeds, cachedFilters, filter = filter)
                     _viewState.postValue(ViewResult.Success(state))
                     cachedFilter = filter
                 }

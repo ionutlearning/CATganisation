@@ -10,10 +10,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 
 class BreedsViewModelTest {
     @get:Rule
@@ -36,11 +33,14 @@ class BreedsViewModelTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this, relaxed = true)
+    }
+
+    private fun initViewModel() {
         viewModel = BreedsViewModel(getBreedsTask, getBreedsByOriginTask, getFiltersTask)
     }
 
     @Test
-    fun `getBreeds returns liveData with Success`() =
+    fun `init viewModel returns liveData with Success`() =
         mainCoroutineRule.runBlockingTest {
             val taskResult = flowOf(listOf(breed))
             val filterResult = flowOf(listOf(filter))
@@ -54,12 +54,13 @@ class BreedsViewModelTest {
             coEvery { getBreedsTask() } returns taskResult
             coEvery { getFiltersTask() } returns filterResult
 
-            viewModel.getBreeds()
+            initViewModel()
+
             Assert.assertEquals(viewModel.viewState.getOrAwaitValue(), liveDataResult)
         }
 
     @Test
-    fun `getBreeds returns liveData with Error when breedsTask throws error`() =
+    fun `init viewModel returns liveData with Error when breedsTask throws error`() =
         mainCoroutineRule.runBlockingTest {
             val filterResult = flowOf(listOf(filter))
             val liveDataResult = ViewResult.Error(errorMessage)
@@ -67,12 +68,13 @@ class BreedsViewModelTest {
             coEvery { getBreedsTask() } throws RuntimeException(errorMessage)
             coEvery { getFiltersTask() } returns filterResult
 
-            viewModel.getBreeds()
+            initViewModel()
+
             Assert.assertEquals(viewModel.viewState.getOrAwaitValue(), liveDataResult)
         }
 
     @Test
-    fun `getBreeds returns liveData with Error when filterTask throws error`() =
+    fun `init viewModel returns liveData with Error when filterTask throws error`() =
         mainCoroutineRule.runBlockingTest {
             val taskResult = flowOf(listOf(breed))
             val liveDataResult = ViewResult.Error(errorMessage)
@@ -80,7 +82,8 @@ class BreedsViewModelTest {
             coEvery { getBreedsTask() } returns taskResult
             coEvery { getFiltersTask() } throws RuntimeException(errorMessage)
 
-            viewModel.getBreeds()
+            initViewModel()
+
             Assert.assertEquals(viewModel.viewState.getOrAwaitValue(), liveDataResult)
         }
 
@@ -92,6 +95,7 @@ class BreedsViewModelTest {
 
             coEvery { getBreedsByOriginTask(filterFrance) } returns taskResult
 
+            initViewModel()
             viewModel.filter(filterFrance)
             Assert.assertEquals(viewModel.viewState.getOrAwaitValue(), liveDataResult)
         }
@@ -105,6 +109,7 @@ class BreedsViewModelTest {
                 errorMessage
             )
 
+            initViewModel()
             viewModel.filter(filterFrance)
             Assert.assertEquals(viewModel.viewState.getOrAwaitValue(), liveDataResult)
         }
@@ -117,6 +122,7 @@ class BreedsViewModelTest {
 
             coEvery { getBreedsTask() } returns taskResult
 
+            initViewModel()
             viewModel.cachedFilter = filterFrance
             viewModel.filter(filterAllBreeds)
             Assert.assertEquals(viewModel.viewState.getOrAwaitValue(), liveDataResult)
@@ -129,6 +135,7 @@ class BreedsViewModelTest {
 
             coEvery { getBreedsTask() } throws RuntimeException(errorMessage)
 
+            initViewModel()
             viewModel.cachedFilter = filterFrance
             viewModel.filter(filterAllBreeds)
             Assert.assertEquals(viewModel.viewState.getOrAwaitValue(), liveDataResult)

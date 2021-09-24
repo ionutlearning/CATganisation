@@ -22,6 +22,6 @@ val filterFrance = "France"
 
 val filterAllBreeds = "All Breeds"
 
-val filteredFranceViewState = BreedsViewState(listOf(breed), emptyList(), filterFrance, true)
+val filteredFranceViewState = BreedsViewState(listOf(breed), emptyList(), filterFrance)
 
-val filteredAllBreedsViewState = BreedsViewState(listOf(breed), emptyList(), filterAllBreeds, true)
+val filteredAllBreedsViewState = BreedsViewState(listOf(breed), emptyList(), filterAllBreeds)

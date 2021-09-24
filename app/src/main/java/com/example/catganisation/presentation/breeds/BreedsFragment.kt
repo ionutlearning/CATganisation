@@ -29,7 +29,6 @@ class BreedsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBreedsBinding.inflate(inflater, container, false)
-        viewModel.getBreeds()
         val adapter = BreedsAdapter(::navigateToDetails)
         binding.breeds.adapter = adapter
 
@@ -55,9 +54,7 @@ class BreedsFragment : Fragment() {
             when (state) {
                 is ViewResult.Success -> {
                     adapter.submitList(state.data.breeds)
-                    if (!state.data.isFiltering) {
-                        setupFilterMenu(state.data.filters)
-                    }
+                    setupFilterMenu(state.data.filters)
                     binding.filterTitle.text = state.data.filter
                 }
                 is ViewResult.Error -> binding.errorMessage.text = state.message
